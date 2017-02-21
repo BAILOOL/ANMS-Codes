@@ -1,3 +1,4 @@
+#include <numeric>
 #include <anms.h>
 
 int main(int argc, char *argv[])
