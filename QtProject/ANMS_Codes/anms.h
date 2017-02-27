@@ -67,14 +67,14 @@ vector<cv::KeyPoint> Sdc(vector<cv::KeyPoint> keyPoints, int numRetPoints, float
     unsigned int K = numRetPoints;
     unsigned int Kmin = round(K-(K*tolerance)); unsigned int Kmax = round(K+(K*tolerance));
 
+    vector<int> result; result.reserve(keyPoints.size());
     while(!complete){
-        vector<int> result; result.reserve(keyPoints.size());
-        result.clear();
         radius = low+(high-low)/2;
         if (radius == prevradius) { //needed to reassure the same radius is not repeated again
             ResultVec = result; //return the keypoints from the previous iteration
             break;
         }
+        result.clear();
         double c = eps_var*radius/sqrt(2); //initializing Grid
         int numCellCols = floor(cols/c);
         int numCellRows = floor(rows/c);
@@ -170,16 +170,15 @@ vector<cv::KeyPoint> KdTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,flo
     int low = 1; int high = cols; //binary search range initialization
     int radius; int prevradius = -1;
 
+    vector<int> result; result.reserve(keyPoints.size());
     while(!complete){
         vector<bool> Included(keyPoints.size(),true);
-        vector<int> result; result.reserve(keyPoints.size());
-        result.clear();
-
         radius = low+(high-low)/2;
         if (radius == prevradius) { //needed to reassure the same radius is not repeated again
             ResultVec = result; //return the keypoints from the previous iteration
             break;
         }
+        result.clear();
 
         for (unsigned int i=0;i<keyPoints.size();++i){
             if (Included[i]==true){
@@ -227,16 +226,15 @@ vector<cv::KeyPoint> RangeTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,
     int width;
     int prevwidth = -1;
 
+    vector<int> result; result.reserve(keyPoints.size());
     while(!complete){
         vector<bool> Included(keyPoints.size(),true);
-        vector<int> result; result.reserve(keyPoints.size());
-        result.clear();
-
         width = low+(high-low)/2;
         if (width == prevwidth) { //needed to reassure the same width is not repeated again
             ResultVec = result; //return the keypoints from the previous iteration
             break;
         }
+        result.clear();
 
         for (unsigned int i=0;i<keyPoints.size();++i){
             if (Included[i]==true){
@@ -271,22 +269,22 @@ vector<cv::KeyPoint> Ssc(vector<cv::KeyPoint> keyPoints, int numRetPoints,float 
     double eps_var = 0.25;
 
     int low = 1; int high = cols; //binary search range initialization
-    int radius;
-    int prevradius = -1;
+    int width;
+    int prevWidth = -1;
 
     vector<int> ResultVec;
     bool complete = false;
     unsigned int K = numRetPoints; unsigned int Kmin = round(K-(K*tolerance)); unsigned int Kmax = round(K+(K*tolerance));
 
+    vector<int> result; result.reserve(keyPoints.size());
     while(!complete){
-        vector<int> result; result.reserve(keyPoints.size());
-        result.clear();
-        radius = low+(high-low)/2;
-        if (radius == prevradius) { //needed to reassure the same radius is not repeated again
+        width = low+(high-low)/2;
+        if (width == prevWidth) { //needed to reassure the same radius is not repeated again
             ResultVec = result; //return the keypoints from the previous iteration
             break;
         }
-        double c = eps_var*radius/sqrt(2); //initializing Grid
+        result.clear();
+        double c = eps_var*width/sqrt(2); //initializing Grid
         int numCellCols = floor(cols/c);
         int numCellRows = floor(rows/c);
         vector<vector<bool> > coveredVec(numCellRows+1,vector<bool>(numCellCols+1,false));
@@ -296,10 +294,10 @@ vector<cv::KeyPoint> Ssc(vector<cv::KeyPoint> keyPoints, int numRetPoints,float 
             int col = floor(keyPoints[i].pt.x/c);
             if (coveredVec[row][col]==false){ // if the cell is not covered
                 result.push_back(i);
-                int rowMin = ((row-floor(radius/c))>=0)? (row-floor(radius/c)) : 0; //get range which current radius is covering
-                int rowMax = ((row+floor(radius/c))<=numCellRows)? (row+floor(radius/c)) : numCellRows;
-                int colMin = ((col-floor(radius/c))>=0)? (col-floor(radius/c)) : 0;
-                int colMax = ((col+floor(radius/c))<=numCellCols)? (col+floor(radius/c)) : numCellCols;
+                int rowMin = ((row-floor(width/c))>=0)? (row-floor(width/c)) : 0; //get range which current radius is covering
+                int rowMax = ((row+floor(width/c))<=numCellRows)? (row+floor(width/c)) : numCellRows;
+                int colMin = ((col-floor(width/c))>=0)? (col-floor(width/c)) : 0;
+                int colMax = ((col+floor(width/c))<=numCellCols)? (col+floor(width/c)) : numCellCols;
                 for (int rowToCov=rowMin; rowToCov<=rowMax; ++rowToCov){
                     for (int colToCov=colMin ; colToCov<=colMax; ++colToCov){
                         if (!coveredVec[rowToCov][colToCov]) coveredVec[rowToCov][colToCov] = true; //cover cells within the square bounding box with width w
@@ -312,8 +310,9 @@ vector<cv::KeyPoint> Ssc(vector<cv::KeyPoint> keyPoints, int numRetPoints,float 
             ResultVec = result;
             complete = true;
         }
-        else if (result.size()<Kmin) high = radius-1; //update binary search range
-        else low = radius+1;
+        else if (result.size()<Kmin) high = width-1; //update binary search range
+        else low = width+1;
+        prevWidth = width;
     }
         // retrieve final keypoints
         vector<cv::KeyPoint> kp;

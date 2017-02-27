@@ -87,5 +87,6 @@ int main(int argc, char *argv[])
     VisualizeAll(testImg,rangetreeKP,"Range Tree KeyPoints");
     VisualizeAll(testImg,sscKP,"SSC KeyPoints");
 
+    cv::waitKey(0); // Wait for a keystroke in the window
     return a.exec();
 }
