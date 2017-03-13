@@ -60,13 +60,13 @@ int main(int argc, char *argv[])
 
     cout << "\nStart K-d Tree ANMS" << endl;
     clock_t kdtreeStart = clock();
-    vector<cv::KeyPoint> kdtreeKP = KdTree(keyPointsSorted,numRetPoints,tolerance,testImg.cols);
+    vector<cv::KeyPoint> kdtreeKP = KdTree(keyPointsSorted,numRetPoints,tolerance,testImg.cols,testImg.rows);
     clock_t kdtreeTotalTime = double( clock() - kdtreeStart)*1000/(double)CLOCKS_PER_SEC;
     cout << "Finish K-d Tree ANMS " << kdtreeTotalTime << " miliseconds." << endl;
 
     cout << "\nStart Range Tree ANMS" << endl;
     clock_t rangetreeStart = clock();
-    vector<cv::KeyPoint> rangetreeKP = RangeTree(keyPointsSorted,numRetPoints,tolerance,testImg.cols);
+    vector<cv::KeyPoint> rangetreeKP = RangeTree(keyPointsSorted,numRetPoints,tolerance,testImg.cols,testImg.rows);
     clock_t rangetreeTotalTime = double( clock() - rangetreeStart)*1000/(double)CLOCKS_PER_SEC;
     cout << "Finish Range Tree ANMS " << rangetreeTotalTime << " miliseconds." << endl;
 
