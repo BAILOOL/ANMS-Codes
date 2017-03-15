@@ -70,7 +70,7 @@ vector<cv::KeyPoint> Sdc(vector<cv::KeyPoint> keyPoints, int numRetPoints, float
     vector<int> result; result.reserve(keyPoints.size());
     while(!complete){
         radius = low+(high-low)/2;
-        if (radius == prevradius) { //needed to reassure the same radius is not repeated again
+        if (radius == prevradius || low>high) { //needed to reassure the same radius is not repeated again
             ResultVec = result; //return the keypoints from the previous iteration
             break;
         }
@@ -159,8 +159,8 @@ void generatePointCloud(PointCloud<T> &point, vector<cv::KeyPoint> keyPoints)
 
 vector<cv::KeyPoint> KdTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,float tolerance,int cols,int rows){
     // several temp expression variables to simplify solution equation
-    double exp1 = rows + cols + 2*numRetPoints;
-    double exp2 = (4*rows + 4*numRetPoints + 4*rows*numRetPoints + rows*rows + cols*cols - 2*rows*cols + 4*rows*cols*numRetPoints);
+    int exp1 = rows + cols + 2*numRetPoints;
+    long long exp2 = ((long long) 4*cols + (long long)4*numRetPoints + (long long)4*rows*numRetPoints + (long long)rows*rows + (long long) cols*cols - (long long)2*rows*cols + (long long)4*rows*cols*numRetPoints);
     double exp3 = sqrt(exp2);
     double exp4 = (2*(numRetPoints - 1));
 
@@ -169,8 +169,6 @@ vector<cv::KeyPoint> KdTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,flo
 
     int high = (sol1>sol2)? sol1 : sol2; //binary search range initialization with positive solution
     int low = floor(sqrt((double)keyPoints.size()/numRetPoints));
-    high = high*high; //nonaflann kd tree works with squared distances
-    low = low*low; //nonaflann kd tree works with squared distances
 
 
     PointCloud<int> cloud; //creating k-d tree with keypoints
@@ -188,7 +186,7 @@ vector<cv::KeyPoint> KdTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,flo
     while(!complete){
         vector<bool> Included(keyPoints.size(),true);
         radius = low+(high-low)/2;
-        if (radius == prevradius) { //needed to reassure the same radius is not repeated again
+        if (radius == prevradius || low>high) { //needed to reassure the same radius is not repeated again
             ResultVec = result; //return the keypoints from the previous iteration
             break;
         }
@@ -198,7 +196,7 @@ vector<cv::KeyPoint> KdTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,flo
             if (Included[i]==true){
                 Included[i] = false;
                 result.push_back(i);
-                const int search_radius = static_cast<int>(radius);
+                const int search_radius = static_cast<int>(radius*radius);
                 vector<pair<size_t,int> >   ret_matches;
                 nanoflann::SearchParams params;
                 const int query_pt[2] = { (int)keyPoints[i].pt.x, (int)keyPoints[i].pt.y};
@@ -230,8 +228,8 @@ vector<cv::KeyPoint> KdTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,flo
 vector<cv::KeyPoint> RangeTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,float tolerance, int cols, int rows)
 {
     // several temp expression variables to simplify solution equation
-    double exp1 = rows + cols + 2*numRetPoints;
-    double exp2 = (4*rows + 4*numRetPoints + 4*rows*numRetPoints + rows*rows + cols*cols - 2*rows*cols + 4*rows*cols*numRetPoints);
+    int exp1 = rows + cols + 2*numRetPoints;
+    long long exp2 = ((long long) 4*cols + (long long)4*numRetPoints + (long long)4*rows*numRetPoints + (long long)rows*rows + (long long) cols*cols - (long long)2*rows*cols + (long long)4*rows*cols*numRetPoints);
     double exp3 = sqrt(exp2);
     double exp4 = (2*(numRetPoints - 1));
 
@@ -255,7 +253,7 @@ vector<cv::KeyPoint> RangeTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,
     while(!complete){
         vector<bool> Included(keyPoints.size(),true);
         width = low+(high-low)/2;
-        if (width == prevwidth) { //needed to reassure the same width is not repeated again
+        if (width == prevwidth || low>high) { //needed to reassure the same width is not repeated again
             ResultVec = result; //return the keypoints from the previous iteration
             break;
         }
@@ -292,8 +290,8 @@ vector<cv::KeyPoint> RangeTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,
 
 vector<cv::KeyPoint> Ssc(vector<cv::KeyPoint> keyPoints, int numRetPoints,float tolerance, int cols, int rows){
     // several temp expression variables to simplify solution equation
-    double exp1 = rows + cols + 2*numRetPoints;
-    double exp2 = (4*rows + 4*numRetPoints + 4*rows*numRetPoints + rows*rows + cols*cols - 2*rows*cols + 4*rows*cols*numRetPoints);
+    int exp1 = rows + cols + 2*numRetPoints;
+    long long exp2 = ((long long) 4*cols + (long long)4*numRetPoints + (long long)4*rows*numRetPoints + (long long)rows*rows + (long long) cols*cols - (long long)2*rows*cols + (long long)4*rows*cols*numRetPoints);
     double exp3 = sqrt(exp2);
     double exp4 = (2*(numRetPoints - 1));
 
@@ -313,7 +311,7 @@ vector<cv::KeyPoint> Ssc(vector<cv::KeyPoint> keyPoints, int numRetPoints,float 
     vector<int> result; result.reserve(keyPoints.size());
     while(!complete){
         width = low+(high-low)/2;
-        if (width == prevWidth) { //needed to reassure the same radius is not repeated again
+        if (width == prevWidth || low>high) { //needed to reassure the same radius is not repeated again
             ResultVec = result; //return the keypoints from the previous iteration
             break;
         }
