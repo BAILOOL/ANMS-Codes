@@ -1,4 +1,4 @@
-#ANMS Codes Cmake Compile
+# Cmake
 
 Compiling procedure:
 ```
