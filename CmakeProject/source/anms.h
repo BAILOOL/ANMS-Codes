@@ -18,6 +18,7 @@ vector<cv::KeyPoint> TopN(vector<cv::KeyPoint> keyPoints, int numRetPoints)
     return kp;
 }
 
+#if CV_MAJOR_VERSION < 3   // If you are using OpenCV 2
 vector<cv::KeyPoint> GridFAST(cv::Mat Image, int numRetPoints, int gridRows, int gridCols){
     vector<cv::KeyPoint> kp;
     cv::Ptr<cv::FeatureDetector> featdetectorK = new cv::GridAdaptedFeatureDetector(cv::FeatureDetector::create("FAST"), numRetPoints, gridRows, gridCols);
@@ -25,7 +26,7 @@ vector<cv::KeyPoint> GridFAST(cv::Mat Image, int numRetPoints, int gridRows, int
 
     return kp;
 }
-
+#endif
 
 struct sort_pred {
     bool operator()(const pair<float,int> &left, const pair<float,int> &right) {

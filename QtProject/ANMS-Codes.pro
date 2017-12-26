@@ -9,10 +9,9 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 
-INCLUDEPATH += /usr/include/opencv
-LIBS += -lopencv_core
-LIBS += -lopencv_highgui
-LIBS += -lopencv_features2d
+INCLUDEPATH += /usr/local/include/opencv
+
+LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_features2d -lopencv_imgcodecs
 
 SOURCES += main.cpp
 

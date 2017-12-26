@@ -10,10 +10,14 @@ int main(int argc, char *argv[])
 
     cv::namedWindow("Input Image", cv::WINDOW_AUTOSIZE); cv::imshow( "Input Image", testImg);
 
-    int fastTresh = 1; // Fast threshold. Usually this value is set to be in range [10,35]
+    int fastThresh = 1; // Fast threshold. Usually this value is set to be in range [10,35]
     vector<cv::KeyPoint> keyPoints; //vector to keep detected KeyPoints
-    cv::FastFeatureDetector fastDetector(fastTresh, true);
-    fastDetector.detect(testImg, keyPoints);
+    #if CV_MAJOR_VERSION < 3   // If you are using OpenCV 2 
+        cv::FastFeatureDetector fastDetector(fastThresh, true);
+        fastDetector.detect(testImg, keyPoints);
+    #else
+        cv::FAST(testImg,keyPoints,fastThresh,true);
+    #endif
     cout << "Number of points detected : " << keyPoints.size() << endl;
 
     cv::Mat fastDetectionResults; //draw FAST detections
@@ -40,11 +44,13 @@ int main(int argc, char *argv[])
     clock_t topNTotalTime = double( clock() - topNStart)*1000/(double)CLOCKS_PER_SEC;
     cout << "Finish TopN in " << topNTotalTime << " miliseconds." << endl;
 
-    cout << "\nStart GridFAST" << endl;
-    clock_t gridFASTStart = clock();
-    vector<cv::KeyPoint> gridFASTKP = GridFAST(testImg,numRetPoints,7,4); //change gridRows=7 and gridCols=4 parameters if necessary
-    clock_t gridFASTTotalTime = double( clock() - gridFASTStart)*1000/(double)CLOCKS_PER_SEC;
-    cout << "Finish GridFAST in " << gridFASTTotalTime << " miliseconds." << endl;
+    #if CV_MAJOR_VERSION < 3 // Bucketing is no longer available in opencv3
+        cout << "\nStart GridFAST" << endl;
+        clock_t gridFASTStart = clock();
+        vector<cv::KeyPoint> gridFASTKP = GridFAST(testImg,numRetPoints,7,4); //change gridRows=7 and gridCols=4 parameters if necessary
+        clock_t gridFASTTotalTime = double( clock() - gridFASTStart)*1000/(double)CLOCKS_PER_SEC;
+        cout << "Finish GridFAST in " << gridFASTTotalTime << " miliseconds." << endl;
+    #endif
 
     cout << "\nBrown ANMS" << endl;
     clock_t brownStart = clock();
@@ -78,7 +84,9 @@ int main(int argc, char *argv[])
 
     //results visualization
     VisualizeAll(testImg,topnKP,"TopN KeyPoints");
-    VisualizeAll(testImg,gridFASTKP,"Grid FAST KeyPoints");
+    #if CV_MAJOR_VERSION < 3 
+        VisualizeAll(testImg,gridFASTKP,"Grid FAST KeyPoints");
+    #endif
     VisualizeAll(testImg,brownKP,"Brown ANMS KeyPoints");
     VisualizeAll(testImg,sdcKP,"SDC KeyPoints");
     VisualizeAll(testImg,kdtreeKP,"K-d Tree KeyPoints");
