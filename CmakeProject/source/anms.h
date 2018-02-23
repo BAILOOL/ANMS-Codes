@@ -105,11 +105,11 @@ vector<cv::KeyPoint> Sdc(vector<cv::KeyPoint> keyPoints, int numRetPoints, float
         else if (result.size()<Kmin) high = radius-1; //update binary search range
         else low = radius+1;
     }
-        // retrieve final keypoints
-        vector<cv::KeyPoint> kp;
-        for (unsigned int i = 0; i<ResultVec.size(); i++) kp.push_back(keyPoints[ResultVec[i]]);
+    // retrieve final keypoints
+    vector<cv::KeyPoint> kp;
+    for (unsigned int i = 0; i<ResultVec.size(); i++) kp.push_back(keyPoints[ResultVec[i]]);
 
-        return kp;
+    return kp;
 }
 
 
@@ -347,11 +347,11 @@ vector<cv::KeyPoint> Ssc(vector<cv::KeyPoint> keyPoints, int numRetPoints,float 
         else low = width+1;
         prevWidth = width;
     }
-        // retrieve final keypoints
-        vector<cv::KeyPoint> kp;
-        for (unsigned int i = 0; i<ResultVec.size(); i++) kp.push_back(keyPoints[ResultVec[i]]);
+    // retrieve final keypoints
+    vector<cv::KeyPoint> kp;
+    for (unsigned int i = 0; i<ResultVec.size(); i++) kp.push_back(keyPoints[ResultVec[i]]);
 
-        return kp;
+    return kp;
 }
 
 
