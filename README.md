@@ -1,6 +1,6 @@
 # Efficient adaptive non-maximal suppression algorithms for homogeneous spatial keypoint distribution
 
-This is the implemetation of the paper *"Efficient adaptive non-maximal suppression algorithms for homogeneous spatial keypoint distribution"* that is currently under review in Pattern Recognition Letters (PRL).
+This is the implemetation of the [paper](https://www.researchgate.net/publication/323388062_Efficient_adaptive_non-maximal_suppression_algorithms_for_homogeneous_spatial_keypoint_distribution) *"Efficient adaptive non-maximal suppression algorithms for homogeneous spatial keypoint distribution"* that is accepted to Pattern Recognition Letters (PRL).
 
 ![Algorithm Overview](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/algorithm_overview.png?raw=true?raw=true "Algorithm Overview")
 
@@ -18,7 +18,7 @@ Here is how proposed ANMS method visually compares to traditional methods: TopM 
 ![SSC](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/SSC.png?raw=true "SSC") |
 |:---:|:---:|:---:|
 
-For more details about the algorithm, experiments as well as the importance of homogenously distributed keypoints for SLAM please refer to the [paper].
+For more details about the algorithm, experiments as well as the importance of homogenously distributed keypoints for SLAM please refer to the [paper](https://www.researchgate.net/publication/323388062_Efficient_adaptive_non-maximal_suppression_algorithms_for_homogeneous_spatial_keypoint_distribution).
 
 ## How to run
 1. Clone this repository: ``` git clone https://github.com/BAILOOL/ANMS-Codes.git ```
