@@ -29,3 +29,17 @@ For more details about the algorithm, experiments as well as the importance of h
 4. Run the code: ``` ./ANMS_Codes```
 
 Codes are tested with OpenCV 2.4.8, OpenCV 3.3.1 and Ubuntu 14.04, 16.04.
+
+## Citation
+If you use these codes in your research, please cite:
+```
+@article{bailo2018efficient,
+  title={Efficient adaptive non-maximal suppression algorithms for homogeneous spatial keypoint distribution},
+  author={Bailo, Oleksandr and Rameau, Francois and Joo, Kyungdon and Park, Jinsun and Bogdan, Oleksandr and Kweon, In So},
+  journal={Pattern Recognition Letters},
+  volume={106},
+  pages={53--60},
+  year={2018},
+  publisher={Elsevier}
+}
+```
