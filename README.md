@@ -1,6 +1,6 @@
 # Efficient adaptive non-maximal suppression algorithms for homogeneous spatial keypoint distribution
 
-This is the implemetation of the [paper](https://www.researchgate.net/publication/323388062_Efficient_adaptive_non-maximal_suppression_algorithms_for_homogeneous_spatial_keypoint_distribution) *"Efficient adaptive non-maximal suppression algorithms for homogeneous spatial keypoint distribution"* that is accepted to Pattern Recognition Letters (PRL).
+This is the implemetation of the [paper](https://www.researchgate.net/publication/323388062_Efficient_adaptive_non-maximal_suppression_algorithms_for_homogeneous_spatial_keypoint_distribution) *"Efficient adaptive non-maximal suppression algorithms for homogeneous spatial keypoint distribution"* that is published in Pattern Recognition Letters (PRL).
 
 ![Algorithm Overview](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/algorithm_overview.png?raw=true?raw=true "Algorithm Overview")
 
@@ -17,6 +17,12 @@ Here is how proposed ANMS method visually compares to traditional methods: TopM 
 ![Bucketing](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/Bucketing.png?raw=true "Bucketing") |
 ![SSC](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/SSC.png?raw=true "SSC") |
 |:---:|:---:|:---:|
+
+Related algorithms that are implemented in this repository are:
+
+ - *"Visual Odometry based on Stereo Image Sequences with RANSAC-based Outlier Rejection Scheme"* - bucketing
+ - *"Multi-Image Matching using Multi-Scale Oriented Patches"* - original ANMS
+ - *"Efficiently selecting spatially distributed keypoints for visual tracking"* - more efficient ANMS
 
 For more details about the algorithm, experiments as well as the importance of homogenously distributed keypoints for SLAM please refer to the [paper](https://www.researchgate.net/publication/323388062_Efficient_adaptive_non-maximal_suppression_algorithms_for_homogeneous_spatial_keypoint_distribution).
 
