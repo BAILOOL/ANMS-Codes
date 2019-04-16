@@ -317,7 +317,7 @@ vector<cv::KeyPoint> Ssc(vector<cv::KeyPoint> keyPoints, int numRetPoints,float 
             break;
         }
         result.clear();
-        double c = width/2; //initializing Grid
+        double c = (double)width/2.0; //initializing Grid
         int numCellCols = floor(cols/c);
         int numCellRows = floor(rows/c);
         vector<vector<bool> > coveredVec(numCellRows+1,vector<bool>(numCellCols+1,false));
