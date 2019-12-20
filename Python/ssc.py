@@ -1,62 +1,70 @@
 import math
 
-def SSC(keypoints, num_ret_points, tolerance, cols, rows):
-	exp1 = rows + cols + 2*num_ret_points
-	exp2 = 4*cols + 4*num_ret_points + 4*rows*num_ret_points + rows*rows + cols*cols - 2*rows*cols + 4*rows*cols*num_ret_points
-	exp3 = math.sqrt(exp2)
-	exp4 = (2*(num_ret_points - 1))
 
-	sol1 = -round(float(exp1+exp3)/exp4) # first solution
-	sol2 = -round(float(exp1-exp3)/exp4) # second solution
+def ssc(keypoints, num_ret_points, tolerance, cols, rows):
+    exp1 = rows + cols + 2 * num_ret_points
+    exp2 = 4 * cols + 4 * num_ret_points + 4 * rows * num_ret_points + rows * rows + cols * cols - \
+           2 * rows * cols + 4 * rows * cols * num_ret_points
+    exp3 = math.sqrt(exp2)
+    exp4 = (2 * (num_ret_points - 1))
 
-	high = sol1 if (sol1>sol2) else sol2 #binary search range initialization with positive solution
-	low = math.floor(math.sqrt(len(keypoints)/num_ret_points))
+    sol1 = -round(float(exp1 + exp3) / exp4)  # first solution
+    sol2 = -round(float(exp1 - exp3) / exp4)  # second solution
 
-	prevWidth = -1
-	selected_keypoints = []
-	ResultVec = []
-	result = []
-	complete = False
-	K = num_ret_points
-	Kmin = round(K-(K*tolerance))
-	Kmax = round(K+(K*tolerance))
+    high = sol1 if (sol1 > sol2) else sol2  # binary search range initialization with positive solution
+    low = math.floor(math.sqrt(len(keypoints) / num_ret_points))
 
-	while(~complete):
-		width = low+(high-low)/2
-		if (width == prevWidth or low>high): #needed to reassure the same radius is not repeated again
-			ResultVec = result #return the keypoints from the previous iteration
-			break
+    prev_width = -1
+    selected_keypoints = []
+    result_list = []
+    result = []
+    complete = False
+    k = num_ret_points
+    k_min = round(k - (k * tolerance))
+    k_max = round(k + (k * tolerance))
 
-		c = width/2; #initializing Grid
-		numCellCols = int(math.floor(cols/c));
-		numCellRows = int(math.floor(rows/c));
-		coveredVec = [ [False for i in range(numCellCols+1)] for j in range(numCellCols+1)]
-		result = []
-		
-		for i in range(len(keypoints)):
-			row = int(math.floor(keypoints[i].pt[1]/c)) #get position of the cell current point is located at
-			col = int(math.floor(keypoints[i].pt[0]/c))
-			if (coveredVec[row][col]==False): # if the cell is not covered
-				result.append(i)
-				rowMin = int((row-math.floor(width/c)) if ((row-math.floor(width/c))>=0) else 0) #get range which current radius is covering
-				rowMax = int((row+math.floor(width/c)) if ((row+math.floor(width/c))<=numCellRows) else numCellRows)
-				colMin = int((col-math.floor(width/c)) if ((col-math.floor(width/c))>=0) else 0)
-				colMax = int((col+math.floor(width/c)) if ((col+math.floor(width/c))<=numCellCols) else numCellCols)
-				for rowToCov in range(rowMin, rowMax+1):
-					for colToCov in range(colMin, colMax+1):
-						if (~coveredVec[rowToCov][colToCov]):
-							coveredVec[rowToCov][colToCov] = True #cover cells within the square bounding box with width w
+    while not complete:
+        width = low + (high - low) / 2
+        if width == prev_width or low > high:  # needed to reassure the same radius is not repeated again
+            result_list = result  # return the keypoints from the previous iteration
+            break
 
-		if (len(result)>=Kmin and len(result)<=Kmax): #solution found
-			ResultVec = result
-			complete = True
-		elif (len(result)<Kmin): 
-			high = width-1 #update binary search range
-		else: 
-			low = width+1
-		prevWidth = width
+        c = width / 2  # initializing Grid
+        num_cell_cols = int(math.floor(cols / c))
+        num_cell_rows = int(math.floor(rows / c))
+        covered_vec = [[False for _ in range(num_cell_cols + 1)] for _ in range(num_cell_cols + 1)]
+        result = []
 
-	for i in range(len(ResultVec)):
-		selected_keypoints.append(keypoints[ResultVec[i]])
+        for i in range(len(keypoints)):
+            row = int(math.floor(keypoints[i].pt[1] / c))  # get position of the cell current point is located at
+            col = int(math.floor(keypoints[i].pt[0] / c))
+            if not covered_vec[row][col]:  # if the cell is not covered
+                result.append(i)
+                # get range which current radius is covering
+                row_min = int((row - math.floor(width / c)) if ((row - math.floor(width / c)) >= 0) else 0)
+                row_max = int(
+                    (row + math.floor(width / c)) if (
+                            (row + math.floor(width / c)) <= num_cell_rows) else num_cell_rows)
+                col_min = int((col - math.floor(width / c)) if ((col - math.floor(width / c)) >= 0) else 0)
+                col_max = int(
+                    (col + math.floor(width / c)) if (
+                            (col + math.floor(width / c)) <= num_cell_cols) else num_cell_cols)
+                for rowToCov in range(row_min, row_max + 1):
+                    for colToCov in range(col_min, col_max + 1):
+                        if not covered_vec[rowToCov][colToCov]:
+                            # cover cells within the square bounding box with width w
+                            covered_vec[rowToCov][colToCov] = True
 
-	return selected_keypoints
+        if k_min <= len(result) <= k_max:  # solution found
+            result_list = result
+            complete = True
+        elif len(result) < k_min:
+            high = width - 1  # update binary search range
+        else:
+            low = width + 1
+        prev_width = width
+
+    for i in range(len(result_list)):
+        selected_keypoints.append(keypoints[result_list[i]])
+
+    return selected_keypoints
