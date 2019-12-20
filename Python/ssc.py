@@ -6,7 +6,7 @@ def ssc(keypoints, num_ret_points, tolerance, cols, rows):
     exp2 = 4 * cols + 4 * num_ret_points + 4 * rows * num_ret_points + rows * rows + cols * cols - \
            2 * rows * cols + 4 * rows * cols * num_ret_points
     exp3 = math.sqrt(exp2)
-    exp4 = (2 * (num_ret_points - 1))
+    exp4 = num_ret_points - 1
 
     sol1 = -round(float(exp1 + exp3) / exp4)  # first solution
     sol2 = -round(float(exp1 - exp3) / exp4)  # second solution

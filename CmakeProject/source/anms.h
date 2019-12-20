@@ -28,6 +28,7 @@ vector<cv::KeyPoint> GridFAST(cv::Mat Image, int numRetPoints, int gridRows, int
 }
 #endif
 
+
 struct sort_pred {
     bool operator()(const pair<float,int> &left, const pair<float,int> &right) {
         return left.first > right.first;
@@ -159,11 +160,11 @@ void generatePointCloud(PointCloud<T> &point, vector<cv::KeyPoint> keyPoints)
 
 
 vector<cv::KeyPoint> KdTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,float tolerance,int cols,int rows){
-	// several temp expression variables to simplify solution equation
+    // several temp expression variables to simplify solution equation
     int exp1 = rows + cols + 2*numRetPoints;
     long long exp2 = ((long long) 4*cols + (long long)4*numRetPoints + (long long)4*rows*numRetPoints + (long long)rows*rows + (long long) cols*cols - (long long)2*rows*cols + (long long)4*rows*cols*numRetPoints);
     double exp3 = sqrt(exp2);
-    double exp4 = (2*(numRetPoints - 1));
+    double exp4 = numRetPoints - 1;
 
     double sol1 = -round((exp1+exp3)/exp4); // first solution
     double sol2 = -round((exp1-exp3)/exp4); // second solution
@@ -228,11 +229,11 @@ vector<cv::KeyPoint> KdTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,flo
 
 vector<cv::KeyPoint> RangeTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,float tolerance, int cols, int rows)
 {
-	// several temp expression variables to simplify solution equation
+    // several temp expression variables to simplify solution equation
     int exp1 = rows + cols + 2*numRetPoints;
     long long exp2 = ((long long) 4*cols + (long long)4*numRetPoints + (long long)4*rows*numRetPoints + (long long)rows*rows + (long long) cols*cols - (long long)2*rows*cols + (long long)4*rows*cols*numRetPoints);
     double exp3 = sqrt(exp2);
-    double exp4 = (2*(numRetPoints - 1));
+    double exp4 = numRetPoints - 1;
 
     double sol1 = -round((exp1+exp3)/exp4); // first solution
     double sol2 = -round((exp1-exp3)/exp4); // second solution
@@ -294,7 +295,7 @@ vector<cv::KeyPoint> Ssc(vector<cv::KeyPoint> keyPoints, int numRetPoints,float 
     int exp1 = rows + cols + 2*numRetPoints;
     long long exp2 = ((long long) 4*cols + (long long)4*numRetPoints + (long long)4*rows*numRetPoints + (long long)rows*rows + (long long) cols*cols - (long long)2*rows*cols + (long long)4*rows*cols*numRetPoints);
     double exp3 = sqrt(exp2);
-    double exp4 = (2*(numRetPoints - 1));
+    double exp4 = numRetPoints - 1;
 
     double sol1 = -round((exp1+exp3)/exp4); // first solution
     double sol2 = -round((exp1-exp3)/exp4); // second solution
@@ -317,7 +318,7 @@ vector<cv::KeyPoint> Ssc(vector<cv::KeyPoint> keyPoints, int numRetPoints,float 
             break;
         }
         result.clear();
-        double c = (double)width/2.0; //initializing Grid
+        double c = width/2; //initializing Grid
         int numCellCols = floor(cols/c);
         int numCellRows = floor(rows/c);
         vector<vector<bool> > coveredVec(numCellRows+1,vector<bool>(numCellCols+1,false));

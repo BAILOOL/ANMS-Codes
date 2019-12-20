@@ -164,7 +164,7 @@ vector<cv::KeyPoint> KdTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,flo
     int exp1 = rows + cols + 2*numRetPoints;
     long long exp2 = ((long long) 4*cols + (long long)4*numRetPoints + (long long)4*rows*numRetPoints + (long long)rows*rows + (long long) cols*cols - (long long)2*rows*cols + (long long)4*rows*cols*numRetPoints);
     double exp3 = sqrt(exp2);
-    double exp4 = (2*(numRetPoints - 1));
+    double exp4 = numRetPoints - 1;
 
     double sol1 = -round((exp1+exp3)/exp4); // first solution
     double sol2 = -round((exp1-exp3)/exp4); // second solution
@@ -233,7 +233,7 @@ vector<cv::KeyPoint> RangeTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,
     int exp1 = rows + cols + 2*numRetPoints;
     long long exp2 = ((long long) 4*cols + (long long)4*numRetPoints + (long long)4*rows*numRetPoints + (long long)rows*rows + (long long) cols*cols - (long long)2*rows*cols + (long long)4*rows*cols*numRetPoints);
     double exp3 = sqrt(exp2);
-    double exp4 = (2*(numRetPoints - 1));
+    double exp4 = numRetPoints - 1;
 
     double sol1 = -round((exp1+exp3)/exp4); // first solution
     double sol2 = -round((exp1-exp3)/exp4); // second solution
@@ -295,7 +295,7 @@ vector<cv::KeyPoint> Ssc(vector<cv::KeyPoint> keyPoints, int numRetPoints,float 
     int exp1 = rows + cols + 2*numRetPoints;
     long long exp2 = ((long long) 4*cols + (long long)4*numRetPoints + (long long)4*rows*numRetPoints + (long long)rows*rows + (long long) cols*cols - (long long)2*rows*cols + (long long)4*rows*cols*numRetPoints);
     double exp3 = sqrt(exp2);
-    double exp4 = (2*(numRetPoints - 1));
+    double exp4 = numRetPoints - 1;
 
     double sol1 = -round((exp1+exp3)/exp4); // first solution
     double sol2 = -round((exp1-exp3)/exp4); // second solution
