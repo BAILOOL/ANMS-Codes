@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     cv::namedWindow("FAST Detections", cv::WINDOW_AUTOSIZE); cv::imshow( "FAST Detections", fastDetectionResults);
 
     //Sorting keypoints by deacreasing order of strength
-    vector<int> responseVector;
+    vector<float> responseVector;
     for (unsigned int i =0 ; i<keyPoints.size(); i++) responseVector.push_back(keyPoints[i].response);
     vector<int> Indx(responseVector.size()); std::iota (std::begin(Indx), std::end(Indx), 0);
     cv::sortIdx(responseVector, Indx, CV_SORT_DESCENDING);
