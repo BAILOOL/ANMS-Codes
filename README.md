@@ -6,16 +6,12 @@ This is the implemetation of the [paper](https://www.researchgate.net/publicatio
 
 While competing ANMS methods have similar performance in terms of spatial keypoints distribution, the proposed method SSC is substantially faster and scales better:
 
-| ![Retrieve 10%](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/Time10.png?raw=true "Retrieve 10%") |
-![Retrieve 40%](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/Time40.png?raw=true "Retrieve 40%") |
-![Retrieve 70%](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/Time70.png?raw=true "Retrieve 70%") |
-|:---:|:---:|:---:|
+| ![Retrieve 10%](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/Time10.png?raw=true "Retrieve 10%") | ![Retrieve 40%](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/Time40.png?raw=true "Retrieve 40%") | ![Retrieve 70%](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/Time70.png?raw=true "Retrieve 70%") |
+|:----:|:---:|:---:|
 
 Here is how proposed ANMS method visually compares to traditional methods: TopM | Bucketing | SSC (proposed)
 
-| ![TopM](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/TopM.png?raw=true "TopM") |
-![Bucketing](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/Bucketing.png?raw=true "Bucketing") |
-![SSC](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/SSC.png?raw=true "SSC") |
+| ![TopM](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/TopM.png?raw=true "TopM") | ![Bucketing](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/Bucketing.png?raw=true "Bucketing") | ![SSC](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/SSC.png?raw=true "SSC") |
 |:---:|:---:|:---:|
 
 Related algorithms that are implemented in this repository are:
