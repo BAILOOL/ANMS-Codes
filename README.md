@@ -1,6 +1,6 @@
 # Efficient adaptive non-maximal suppression algorithms for homogeneous spatial keypoint distribution
 
-This is the implemetation of the [paper](https://www.researchgate.net/publication/323388062_Efficient_adaptive_non-maximal_suppression_algorithms_for_homogeneous_spatial_keypoint_distribution) *"Efficient adaptive non-maximal suppression algorithms for homogeneous spatial keypoint distribution"* that is published in Pattern Recognition Letters (PRL).
+This is the implementation of the [paper](https://www.researchgate.net/publication/323388062_Efficient_adaptive_non-maximal_suppression_algorithms_for_homogeneous_spatial_keypoint_distribution) *"Efficient adaptive non-maximal suppression algorithms for homogeneous spatial keypoint distribution"* that is published in Pattern Recognition Letters (PRL).
 
 ![Algorithm Overview](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/algorithm_overview.png?raw=true?raw=true "Algorithm Overview")
 
@@ -20,15 +20,15 @@ Related algorithms that are implemented in this repository are:
  - *"Multi-Image Matching using Multi-Scale Oriented Patches"* - original ANMS
  - *"Efficiently selecting spatially distributed keypoints for visual tracking"* - more efficient ANMS
 
-For more details about the algorithm, experiments as well as the importance of homogenously distributed keypoints for SLAM please refer to the [paper](https://www.researchgate.net/publication/323388062_Efficient_adaptive_non-maximal_suppression_algorithms_for_homogeneous_spatial_keypoint_distribution).
+For more details about the algorithm, experiments as well as the importance of homogeneously distributed keypoints for SLAM please refer to the [paper](https://www.researchgate.net/publication/323388062_Efficient_adaptive_non-maximal_suppression_algorithms_for_homogeneous_spatial_keypoint_distribution).
 
 ## How to run
 1. Clone this repository: ``` git clone https://github.com/BAILOOL/ANMS-Codes.git ```
-2. Visit [CmakeProject](https://github.com/BAILOOL/ANMS-Codes/tree/master/CmakeProject), [QtProject](https://github.com/BAILOOL/ANMS-Codes/tree/master/QtProject), [Python](https://github.com/BAILOOL/ANMS-Codes/tree/master/Python), or [Matlab](https://github.com/BAILOOL/ANMS-Codes/tree/master/Matlab) folders for your favorite compiling method.
+2. Choose your language: [C++](https://github.com/BAILOOL/ANMS-Codes/tree/master/C++), [Python](https://github.com/BAILOOL/ANMS-Codes/tree/master/Python), or [Matlab](https://github.com/BAILOOL/ANMS-Codes/tree/master/Matlab).
 
-3. Make sure the [path to test image](https://github.com/BAILOOL/ANMS-Codes/blob/d907ca805fcf1ea670ac75a9ea9b46446421e573/CmakeProject/source/main.cpp#L8) is set correctly.
+3. Make sure the [path to test image](https://github.com/BAILOOL/ANMS-Codes/blob/d907ca805fcf1ea670ac75a9ea9b46446421e573/C++/CmakeProject/source/main.cpp#L8) is set correctly.
 
-4. Run the code: ``` ./ANMS_Codes```
+4. Run produced executable ``` ./ANMS_Codes``` for C++ or relevant script for other languages.
 
 Codes are tested with OpenCV 2.4.8, OpenCV 3.3.1 and Ubuntu 14.04, 16.04.
 

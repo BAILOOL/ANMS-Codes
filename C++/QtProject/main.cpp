@@ -1,8 +1,10 @@
-#include <numeric>
+#include <QCoreApplication>
+
 #include <anms.h>
 
 int main(int argc, char *argv[])
 {
+    QCoreApplication a(argc, argv);
     cout<<"Demo of the ANMS algorithms"<<endl;
 
     string testImgPath = "../../Images/test.png"; // Path to image
@@ -12,7 +14,7 @@ int main(int argc, char *argv[])
 
     int fastThresh = 1; // Fast threshold. Usually this value is set to be in range [10,35]
     vector<cv::KeyPoint> keyPoints; //vector to keep detected KeyPoints
-    #if CV_MAJOR_VERSION < 3   // If you are using OpenCV 2 
+    #if CV_MAJOR_VERSION < 3   // If you are using OpenCV 2
         cv::FastFeatureDetector fastDetector(fastThresh, true);
         fastDetector.detect(testImg, keyPoints);
     #else
@@ -47,7 +49,7 @@ int main(int argc, char *argv[])
     #if CV_MAJOR_VERSION < 3 // Bucketing is no longer available in opencv3
         cout << "\nStart GridFAST" << endl;
         clock_t gridFASTStart = clock();
-        vector<cv::KeyPoint> gridFASTKP = GridFAST(testImg,numRetPoints,7,4); //change gridRows=7 and gridCols=4 parameters if necessary
+        vector<cv::KeyPoint> gridFASTKP = GridFAST(testImg,numRetPoints,7,4); //change gridRows=7 and gridCols=4 parameters if           necessary
         clock_t gridFASTTotalTime = double( clock() - gridFASTStart)*1000/(double)CLOCKS_PER_SEC;
         cout << "Finish GridFAST in " << gridFASTTotalTime << " miliseconds." << endl;
     #endif
@@ -84,7 +86,7 @@ int main(int argc, char *argv[])
 
     //results visualization
     VisualizeAll(testImg,topnKP,"TopN KeyPoints");
-    #if CV_MAJOR_VERSION < 3 
+    #if CV_MAJOR_VERSION < 3
         VisualizeAll(testImg,gridFASTKP,"Grid FAST KeyPoints");
     #endif
     VisualizeAll(testImg,brownKP,"Brown ANMS KeyPoints");
@@ -94,5 +96,5 @@ int main(int argc, char *argv[])
     VisualizeAll(testImg,sscKP,"SSC KeyPoints");
 
     cv::waitKey(0); // Wait for a keystroke in the window
-    return 0;
+    return a.exec();
 }

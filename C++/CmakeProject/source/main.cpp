@@ -1,13 +1,11 @@
-#include <QCoreApplication>
-
+#include <numeric>
 #include <anms.h>
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
     cout<<"Demo of the ANMS algorithms"<<endl;
 
-    string testImgPath = "../Images/test.png"; // Path to image
+    string testImgPath = "../../../Images/test.png"; // Path to image
     cv::Mat testImg = cv::imread(testImgPath, CV_LOAD_IMAGE_GRAYSCALE);   // Read the file
 
     cv::namedWindow("Input Image", cv::WINDOW_AUTOSIZE); cv::imshow( "Input Image", testImg);
@@ -49,7 +47,7 @@ int main(int argc, char *argv[])
     #if CV_MAJOR_VERSION < 3 // Bucketing is no longer available in opencv3
         cout << "\nStart GridFAST" << endl;
         clock_t gridFASTStart = clock();
-        vector<cv::KeyPoint> gridFASTKP = GridFAST(testImg,numRetPoints,7,4); //change gridRows=7 and gridCols=4 parameters if           necessary
+        vector<cv::KeyPoint> gridFASTKP = GridFAST(testImg,numRetPoints,7,4); //change gridRows=7 and gridCols=4 parameters if necessary
         clock_t gridFASTTotalTime = double( clock() - gridFASTStart)*1000/(double)CLOCKS_PER_SEC;
         cout << "Finish GridFAST in " << gridFASTTotalTime << " miliseconds." << endl;
     #endif
@@ -96,5 +94,5 @@ int main(int argc, char *argv[])
     VisualizeAll(testImg,sscKP,"SSC KeyPoints");
 
     cv::waitKey(0); // Wait for a keystroke in the window
-    return a.exec();
+    return 0;
 }
