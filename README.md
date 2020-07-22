@@ -32,6 +32,9 @@ For more details about the algorithm, experiments as well as the importance of h
 
 Codes are tested with OpenCV 2.4.8, OpenCV 3.3.1 and Ubuntu 14.04, 16.04.
 
+## Contributing
+Follow instructions in [docs/contributing](https://github.com/BAILOOL/ANMS-Codes/blob/master/docs/contributing.rst).
+
 ## Citation
 If you use these codes in your research, please cite:
 ```text
