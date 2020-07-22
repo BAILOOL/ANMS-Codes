@@ -24,6 +24,7 @@ To create a pull request:
 5. Verify new changes pass Super-Linter:
 
 .. code-block:: bash
+
     docker run -e RUN_LOCAL=true -v /path/to/local/codebase:/tmp/lint github/super-linter
 
 6. Push code to your forked repo.
