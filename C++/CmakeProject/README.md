@@ -1,7 +1,7 @@
 # Cmake
 
 Compiling procedure:
-```
+```bash
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release .. #for Release mode
