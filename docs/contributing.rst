@@ -13,7 +13,7 @@ To create a pull request:
 
 1. Fork the repository.
 2. Clone it.
-3. Install [Super-Linter](https://github.com/github/super-linter):
+3. Install `Super-Linter: https://github.com/github/super-linter`_:
 
 .. code-block:: bash
 
