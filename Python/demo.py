@@ -1,10 +1,11 @@
 #!/usr/bin/env python
+
 import argparse
 from random import shuffle
 
-import cv2
+import cv2 # pylint: disable=import-error 
 
-from ssc import *
+from ssc import ssc
 
 
 def main():

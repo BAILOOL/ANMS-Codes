@@ -49,11 +49,11 @@ def ssc(keypoints, num_ret_points, tolerance, cols, rows):
                 col_max = int(
                     (col + math.floor(width / c)) if (
                             (col + math.floor(width / c)) <= num_cell_cols) else num_cell_cols)
-                for rowToCov in range(row_min, row_max + 1):
-                    for colToCov in range(col_min, col_max + 1):
-                        if not covered_vec[rowToCov][colToCov]:
+                for row_to_cover in range(row_min, row_max + 1):
+                    for col_to_cover in range(col_min, col_max + 1):
+                        if not covered_vec[row_to_cover][col_to_cover]:
                             # cover cells within the square bounding box with width w
-                            covered_vec[rowToCov][colToCov] = True
+                            covered_vec[row_to_cover][col_to_cover] = True
 
         if k_min <= len(result) <= k_max:  # solution found
             result_list = result

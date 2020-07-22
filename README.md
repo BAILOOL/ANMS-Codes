@@ -16,9 +16,9 @@ Here is how proposed ANMS method visually compares to traditional methods: TopM 
 
 Related algorithms that are implemented in this repository are:
 
- - *"Visual Odometry based on Stereo Image Sequences with RANSAC-based Outlier Rejection Scheme"* - bucketing
- - *"Multi-Image Matching using Multi-Scale Oriented Patches"* - original ANMS
- - *"Efficiently selecting spatially distributed keypoints for visual tracking"* - more efficient ANMS
+- *"Visual Odometry based on Stereo Image Sequences with RANSAC-based Outlier Rejection Scheme"* - bucketing
+- *"Multi-Image Matching using Multi-Scale Oriented Patches"* - original ANMS
+- *"Efficiently selecting spatially distributed keypoints for visual tracking"* - more efficient ANMS
 
 For more details about the algorithm, experiments as well as the importance of homogeneously distributed keypoints for SLAM please refer to the [paper](https://www.researchgate.net/publication/323388062_Efficient_adaptive_non-maximal_suppression_algorithms_for_homogeneous_spatial_keypoint_distribution).
 
@@ -28,13 +28,16 @@ For more details about the algorithm, experiments as well as the importance of h
 
 3. Make sure the [path to test image](https://github.com/BAILOOL/ANMS-Codes/blob/d907ca805fcf1ea670ac75a9ea9b46446421e573/C++/CmakeProject/source/main.cpp#L8) is set correctly.
 
-4. Run produced executable ``` ./ANMS_Codes``` for C++ or relevant script for other languages.
+4. Run produced executable ```shell ./ANMS_Codes``` for C++ or relevant script for other languages.
 
 Codes are tested with OpenCV 2.4.8, OpenCV 3.3.1 and Ubuntu 14.04, 16.04.
 
+## Contributing
+Follow instructions in [docs/contributing](https://github.com/BAILOOL/ANMS-Codes/blob/master/docs/contributing.rst).
+
 ## Citation
 If you use these codes in your research, please cite:
-```
+```text
 @article{bailo2018efficient,
   title={Efficient adaptive non-maximal suppression algorithms for homogeneous spatial keypoint distribution},
   author={Bailo, Oleksandr and Rameau, Francois and Joo, Kyungdon and Park, Jinsun and Bogdan, Oleksandr and Kweon, In So},
