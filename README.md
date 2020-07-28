@@ -24,7 +24,7 @@ For more details about the algorithm, experiments as well as the importance of h
 
 ## How to run
 1. Clone this repository: ``` git clone https://github.com/BAILOOL/ANMS-Codes.git ```
-2. Choose your language: [C++](https://github.com/BAILOOL/ANMS-Codes/tree/master/C++), [Python](https://github.com/BAILOOL/ANMS-Codes/tree/master/Python), or [Matlab](https://github.com/BAILOOL/ANMS-Codes/tree/master/Matlab).
+2. Choose your language: [C++](https://github.com/BAILOOL/ANMS-Codes/tree/master/C++), [Python](https://github.com/BAILOOL/ANMS-Codes/tree/master/Python), [Matlab](https://github.com/BAILOOL/ANMS-Codes/tree/master/Matlab), or [Java](https://github.com/BAILOOL/ANMS-Codes/tree/master/Java)).
 
 3. Make sure the [path to test image](https://github.com/BAILOOL/ANMS-Codes/blob/d907ca805fcf1ea670ac75a9ea9b46446421e573/C++/CmakeProject/source/main.cpp#L8) is set correctly.
 
