@@ -3,7 +3,7 @@
 import argparse
 from random import shuffle
 
-import cv2 # pylint: disable=import-error 
+import cv2  # pylint: disable=import-error
 
 from ssc import ssc
 

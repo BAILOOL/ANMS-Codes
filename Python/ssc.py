@@ -3,8 +3,8 @@ import math
 
 def ssc(keypoints, num_ret_points, tolerance, cols, rows):
     exp1 = rows + cols + 2 * num_ret_points
-    exp2 = 4 * cols + 4 * num_ret_points + 4 * rows * num_ret_points + rows * rows + cols * cols - \
-           2 * rows * cols + 4 * rows * cols * num_ret_points
+    exp2 = (4 * cols + 4 * num_ret_points + 4 * rows * num_ret_points + rows * rows + cols * cols -
+            2 * rows * cols + 4 * rows * cols * num_ret_points)
     exp3 = math.sqrt(exp2)
     exp4 = num_ret_points - 1
 
@@ -32,7 +32,7 @@ def ssc(keypoints, num_ret_points, tolerance, cols, rows):
         c = width / 2  # initializing Grid
         num_cell_cols = int(math.floor(cols / c))
         num_cell_rows = int(math.floor(rows / c))
-        covered_vec = [[False for _ in range(num_cell_cols + 1)] for _ in range(num_cell_cols + 1)]
+        covered_vec = [[False for _ in range(num_cell_cols + 1)] for _ in range(num_cell_rows + 1)]
         result = []
 
         for i in range(len(keypoints)):
