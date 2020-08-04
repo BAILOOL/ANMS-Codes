@@ -32,7 +32,7 @@ def ssc(keypoints, num_ret_points, tolerance, cols, rows):
         c = width / 2  # initializing Grid
         num_cell_cols = int(math.floor(cols / c))
         num_cell_rows = int(math.floor(rows / c))
-        covered_vec = [[False for _ in range(num_cell_cols + 1)] for _ in range(num_cell_cols + 1)]
+        covered_vec = [[False for _ in range(num_cell_cols + 1)] for _ in range(num_cell_rows + 1)]
         result = []
 
         for i in range(len(keypoints)):
