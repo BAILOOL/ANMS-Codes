@@ -3,15 +3,24 @@ import math
 
 def ssc(keypoints, num_ret_points, tolerance, cols, rows):
     exp1 = rows + cols + 2 * num_ret_points
-    exp2 = (4 * cols + 4 * num_ret_points + 4 * rows * num_ret_points + rows * rows + cols * cols -
-            2 * rows * cols + 4 * rows * cols * num_ret_points)
+    exp2 = (
+        4 * cols
+        + 4 * num_ret_points
+        + 4 * rows * num_ret_points
+        + rows * rows
+        + cols * cols
+        - 2 * rows * cols
+        + 4 * rows * cols * num_ret_points
+    )
     exp3 = math.sqrt(exp2)
     exp4 = num_ret_points - 1
 
     sol1 = -round(float(exp1 + exp3) / exp4)  # first solution
     sol2 = -round(float(exp1 - exp3) / exp4)  # second solution
 
-    high = sol1 if (sol1 > sol2) else sol2  # binary search range initialization with positive solution
+    high = (
+        sol1 if (sol1 > sol2) else sol2
+    )  # binary search range initialization with positive solution
     low = math.floor(math.sqrt(len(keypoints) / num_ret_points))
 
     prev_width = -1
@@ -25,30 +34,48 @@ def ssc(keypoints, num_ret_points, tolerance, cols, rows):
 
     while not complete:
         width = low + (high - low) / 2
-        if width == prev_width or low > high:  # needed to reassure the same radius is not repeated again
+        if (
+            width == prev_width or low > high
+        ):  # needed to reassure the same radius is not repeated again
             result_list = result  # return the keypoints from the previous iteration
             break
 
         c = width / 2  # initializing Grid
         num_cell_cols = int(math.floor(cols / c))
         num_cell_rows = int(math.floor(rows / c))
-        covered_vec = [[False for _ in range(num_cell_cols + 1)] for _ in range(num_cell_rows + 1)]
+        covered_vec = [
+            [False for _ in range(num_cell_cols + 1)] for _ in range(num_cell_rows + 1)
+        ]
         result = []
 
         for i in range(len(keypoints)):
-            row = int(math.floor(keypoints[i].pt[1] / c))  # get position of the cell current point is located at
+            row = int(
+                math.floor(keypoints[i].pt[1] / c)
+            )  # get position of the cell current point is located at
             col = int(math.floor(keypoints[i].pt[0] / c))
             if not covered_vec[row][col]:  # if the cell is not covered
                 result.append(i)
                 # get range which current radius is covering
-                row_min = int((row - math.floor(width / c)) if ((row - math.floor(width / c)) >= 0) else 0)
+                row_min = int(
+                    (row - math.floor(width / c))
+                    if ((row - math.floor(width / c)) >= 0)
+                    else 0
+                )
                 row_max = int(
-                    (row + math.floor(width / c)) if (
-                            (row + math.floor(width / c)) <= num_cell_rows) else num_cell_rows)
-                col_min = int((col - math.floor(width / c)) if ((col - math.floor(width / c)) >= 0) else 0)
+                    (row + math.floor(width / c))
+                    if ((row + math.floor(width / c)) <= num_cell_rows)
+                    else num_cell_rows
+                )
+                col_min = int(
+                    (col - math.floor(width / c))
+                    if ((col - math.floor(width / c)) >= 0)
+                    else 0
+                )
                 col_max = int(
-                    (col + math.floor(width / c)) if (
-                            (col + math.floor(width / c)) <= num_cell_cols) else num_cell_cols)
+                    (col + math.floor(width / c))
+                    if ((col + math.floor(width / c)) <= num_cell_cols)
+                    else num_cell_cols
+                )
                 for row_to_cover in range(row_min, row_max + 1):
                     for col_to_cover in range(col_min, col_max + 1):
                         if not covered_vec[row_to_cover][col_to_cover]:
