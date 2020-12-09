@@ -17,137 +17,162 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.highgui.HighGui;
 
 public class AnmsExample {
-	public static void main(String[] args) {
-		Logger logger = Logger.getLogger(AnmsExample.class.getName(), null);
 
-		// Loading the core library
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		logger.log(Level.INFO, "Demo of the ANMS algorithms");
+  /*
+   * Demo of Suppression via Square Covering (SSC) ANMS method.
+   */
+  public static void main(final String[] args) {
+    Logger logger = Logger.getLogger(AnmsExample.class.getName(), null);
 
-		// Read and display input image
-		String testImgPath = "../Images/test.png"; // Path to image
-		Mat testImg = Imgcodecs.imread(testImgPath, Imgcodecs.IMREAD_GRAYSCALE); // Read the file
-		HighGui.imshow("Input Image", testImg);
-		HighGui.waitKey();
+    // Loading the core library
+    System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+    logger.log(Level.INFO, "Demo of the ANMS algorithms");
 
-		int fastThresh = 1; // Fast threshold. Usually this value is set to be in range [10,35]
-		MatOfKeyPoint keypoints = new MatOfKeyPoint();
-		FastFeatureDetector fastDetector = FastFeatureDetector.create(fastThresh);
-		fastDetector.detect(testImg, keypoints);
-		logger.log(Level.INFO, "Number of points detected : {0}", keypoints.size().height);
+    // Read and display input image
+    String testImgPath = "../Images/test.png"; // Path to image
+    Mat testImg = Imgcodecs.imread(testImgPath, Imgcodecs.IMREAD_GRAYSCALE);
+    HighGui.imshow("Input Image", testImg);
+    HighGui.waitKey();
 
-		// Visualize FAST keypoints
-		Mat fastDetectionResults = new Mat();
-		Features2d.drawKeypoints(testImg, keypoints, fastDetectionResults, new Scalar(94.0, 206.0, 165.0), 0);
-		HighGui.imshow("FAST Detections", fastDetectionResults);
-		HighGui.waitKey();
+    int fastThresh = 1; // Fast threshold. Usually it is set to be in [10,35]
+    MatOfKeyPoint keypoints = new MatOfKeyPoint();
+    FastFeatureDetector fastDetector = FastFeatureDetector.create(fastThresh);
+    fastDetector.detect(testImg, keypoints);
+    logger.log(Level.INFO,
+        "Number of points detected : {0}", keypoints.size().height);
 
-		// Sorting keypoints by decreasing order of strength
-		List<KeyPoint> listKeyPointsSorted = keypoints.toList();
-		listKeyPointsSorted.sort((kp1, kp2) -> (int) (kp2.response - kp1.response));
+    // Visualize FAST keypoints
+    Mat fastDetectionResults = new Mat();
+    Scalar color = new Scalar(94.0, 206.0, 165.0);
+    Features2d.drawKeypoints(testImg, keypoints,
+        fastDetectionResults, color, 0);
+    HighGui.imshow("FAST Detections", fastDetectionResults);
+    HighGui.waitKey();
 
-		int numRetPoints = 750; // choose exact number of return points
-		float tolerance = (float) 0.1; // tolerance of the number of return points
+    // Sorting keypoints by decreasing order of strength
+    List<KeyPoint> listKeyPointsSorted = keypoints.toList();
+    listKeyPointsSorted.sort((kp1, kp2) -> (int) (kp2.response - kp1.response));
 
-		logger.log(Level.INFO, "Start SSC ANMS");
-		long startTime = System.currentTimeMillis();
-		List<KeyPoint> sscKeyPoints = ssc(listKeyPointsSorted, numRetPoints, tolerance, testImg.cols(), testImg.rows());
-		long stopTime = System.currentTimeMillis();
-		logger.log(Level.INFO, "Finish SSC ANMS {0} miliseconds", stopTime - startTime);
+    int numRetPoints = 750; // choose exact number of return points
+    float tolerance = (float) 0.1; // tolerance of the number of return points
 
-		// Visualize results
-		Mat resultImg = new Mat();
-		MatOfKeyPoint sscKeyPointsMat = new MatOfKeyPoint();
-		sscKeyPointsMat.fromList(sscKeyPoints);
-		Features2d.drawKeypoints(testImg, sscKeyPointsMat, resultImg, new Scalar(94.0, 206.0, 165.0), 0);
-		HighGui.imshow("SSC KeyPoints", resultImg);
-		HighGui.waitKey();
-	}
+    logger.log(Level.INFO, "Start SSC ANMS");
+    long startTime = System.currentTimeMillis();
+    List<KeyPoint> sscKeyPoints = ssc(listKeyPointsSorted, numRetPoints,
+        tolerance, testImg.cols(), testImg.rows());
+    long stopTime = System.currentTimeMillis();
+    logger.log(Level.INFO,
+        "Finish SSC ANMS {0} miliseconds", stopTime - startTime);
 
-	/*
-	 * Suppression via Square Convering (SSC) algorithm. Check Algorithm 2 in the
-	 * paper:
-	 * https://www.sciencedirect.com/science/article/abs/pii/S016786551830062X
-	 */
-	private static List<KeyPoint> ssc(List<KeyPoint> keyPoints, int numRetPoints, float tolerance, int cols, int rows) {
-		// Several temp expression variables to simplify equation solution
-		int expression1 = rows + cols + 2 * numRetPoints;
-		long expression2 = ((long) 4 * cols + (long) 4 * numRetPoints + (long) 4 * rows * numRetPoints
-				+ (long) rows * rows + (long) cols * cols - (long) 2 * rows * cols
-				+ (long) 4 * rows * cols * numRetPoints);
-		double expression3 = Math.sqrt(expression2);
-		double expression4 = (double) numRetPoints - 1;
+    // Visualize results
+    Mat resultImg = new Mat();
+    MatOfKeyPoint sscKeyPointsMat = new MatOfKeyPoint();
+    sscKeyPointsMat.fromList(sscKeyPoints);
+    Features2d.drawKeypoints(testImg, sscKeyPointsMat, resultImg, color, 0);
+    HighGui.imshow("SSC KeyPoints", resultImg);
+    HighGui.waitKey();
+  }
 
-		double solution1 = -Math.round((expression1 + expression3) / expression4); // first solution
-		double solution2 = -Math.round((expression1 - expression3) / expression4); // second solution
+  /*
+   * Suppression via Square Convering (SSC) algorithm.
+   * Check Algorithm 2 in the paper:
+   * https://www.sciencedirect.com/science/article/abs/pii/S016786551830062X
+   */
+  private static List<KeyPoint> ssc(final List<KeyPoint> keyPoints,
+      final int numRetPoints, final float tolerance,
+      final int cols, final int rows) {
 
-		// binary search range initialization with positive solution
-		int high = (int) ((solution1 > solution2) ? solution1 : solution2);
-		int low = (int) Math.floor(Math.sqrt((double) keyPoints.size() / numRetPoints));
-		int width;
-		int prevWidth = -1;
+    // Several temp expression variables to simplify equation solution
+    int expression1 = rows + cols + 2 * numRetPoints;
+    long expression2 = ((long) 4 * cols + (long) 4 * numRetPoints
+        + (long) 4 * rows * numRetPoints
+        + (long) rows * rows + (long) cols * cols - (long) 2 * rows * cols
+        + (long) 4 * rows * cols * numRetPoints);
+    double expression3 = Math.sqrt(expression2);
+    double expression4 = (double) numRetPoints - 1;
 
-		ArrayList<Integer> resultVec = new ArrayList<>();
-		boolean complete = false;
-		int kMin = Math.round(numRetPoints - (numRetPoints * tolerance));
-		int kMax = Math.round(numRetPoints + (numRetPoints * tolerance));
+    // first solution
+    double solution1 = -Math.round((expression1 + expression3) / expression4);
+    // second solution
+    double solution2 = -Math.round((expression1 - expression3) / expression4);
 
-		ArrayList<Integer> result = new ArrayList<>(keyPoints.size());
-		while (!complete) {
-			width = low + (high - low) / 2;
-			if (width == prevWidth || low > high) { // needed to reassure the same radius is not repeated again
-				resultVec = result; // return the keypoints from the previous iteration
-				break;
-			}
-			result.clear();
-			double c = (double) width / 2; // initializing Grid
-			int numCellCols = (int) Math.floor(cols / c);
-			int numCellRows = (int) Math.floor(rows / c);
+    // binary search range initialization with positive solution
+    int high = (int) ((solution1 > solution2) ? solution1 : solution2);
+    int low = (int) Math.floor(
+        Math.sqrt((double) keyPoints.size() / numRetPoints));
+    int width;
+    int prevWidth = -1;
 
-			// Fill temporary boolean array
-			boolean[][] coveredVec = new boolean[numCellRows + 1][numCellCols + 1];
+    ArrayList<Integer> resultVec = new ArrayList<>();
+    boolean complete = false;
+    int kMin = Math.round(numRetPoints - (numRetPoints * tolerance));
+    int kMax = Math.round(numRetPoints + (numRetPoints * tolerance));
 
-			// Perform square suppression
-			for (int i = 0; i < keyPoints.size(); i++) {
-				// get position of the cell current point is located at
-				int row = (int) Math.floor(keyPoints.get(i).pt.y / c);
-				int col = (int) Math.floor(keyPoints.get(i).pt.x / c);
-				if (!coveredVec[row][col]) { // if the cell is not covered
-					result.add(i);
+    ArrayList<Integer> result = new ArrayList<>(keyPoints.size());
+    while (!complete) {
+      width = low + (high - low) / 2;
 
-					// get range which current radius is covering
-					int rowMin = (int) (((row - (int) Math.floor(width / c)) >= 0) ? (row - Math.floor(width / c)) : 0);
-					int rowMax = (int) (((row + Math.floor(width / c)) <= numCellRows) ? (row + Math.floor(width / c))
-							: numCellRows);
-					int colMin = (int) (((col - Math.floor(width / c)) >= 0) ? (col - Math.floor(width / c)) : 0);
-					int colMax = (int) (((col + Math.floor(width / c)) <= numCellCols) ? (col + Math.floor(width / c))
-							: numCellCols);
+      // needed to reassure the same radius is not repeated again
+      if (width == prevWidth || low > high) {
+        // return the keypoints from the previous iteration
+        resultVec = result;
+        break;
+      }
+      result.clear();
+      double c = (double) width / 2; // initializing Grid
+      int numCellCols = (int) Math.floor(cols / c);
+      int numCellRows = (int) Math.floor(rows / c);
 
-					// cover cells within the square bounding box with width w
-					for (int rowToCov = rowMin; rowToCov <= rowMax; rowToCov++) {
-						for (int colToCov = colMin; colToCov <= colMax; colToCov++) {
-							if (!coveredVec[rowToCov][colToCov])
-								coveredVec[rowToCov][colToCov] = true;
-						}
-					}
-				}
-			}
+      // Fill temporary boolean array
+      boolean[][] coveredVec = new boolean[numCellRows + 1][numCellCols + 1];
 
-			if (result.size() >= kMin && result.size() <= kMax) { // solution found
-				resultVec = result;
-				complete = true;
-			} else if (result.size() < kMin)
-				high = width - 1; // update binary search range
-			else
-				low = width + 1;
-			prevWidth = width;
-		}
+      // Perform square suppression
+      for (int i = 0; i < keyPoints.size(); i++) {
+        // get position of the cell current point is located at
+        int row = (int) Math.floor(keyPoints.get(i).pt.y / c);
+        int col = (int) Math.floor(keyPoints.get(i).pt.x / c);
+        if (!coveredVec[row][col]) { // if the cell is not covered
+          result.add(i);
 
-		// Retrieve final keypoints
-		List<KeyPoint> kp = new ArrayList<>();
-		for (int i : resultVec)
-			kp.add(keyPoints.get(i));
+          // get range which current radius is covering
+          int rowMin = (int) (((row - (int) Math.floor(width / c)) >= 0)
+              ? (row - Math.floor(width / c)) : 0);
+          int rowMax = (int) (((row + Math.floor(width / c)) <= numCellRows)
+              ? (row + Math.floor(width / c)) : numCellRows);
+          int colMin = (int) (((col - Math.floor(width / c)) >= 0)
+              ? (col - Math.floor(width / c)) : 0);
+          int colMax = (int) (((col + Math.floor(width / c)) <= numCellCols)
+              ? (col + Math.floor(width / c)) : numCellCols);
 
-		return kp;
-	}
+          // cover cells within the square bounding box with width w
+          for (int rowToCov = rowMin; rowToCov <= rowMax; rowToCov++) {
+            for (int colToCov = colMin; colToCov <= colMax; colToCov++) {
+              if (!coveredVec[rowToCov][colToCov]) {
+                coveredVec[rowToCov][colToCov] = true;
+              }
+            }
+          }
+        }
+      }
+
+      // solution found
+      if (result.size() >= kMin && result.size() <= kMax) {
+        resultVec = result;
+        complete = true;
+      } else if (result.size() < kMin) {
+        high = width - 1; // update binary search range
+      } else {
+        low = width + 1; // update binary search range
+      }
+      prevWidth = width;
+    }
+
+    // Retrieve final keypoints
+    List<KeyPoint> kp = new ArrayList<>();
+    for (int i : resultVec) {
+      kp.add(keyPoints.get(i));
+    }
+
+    return kp;
+  }
 }

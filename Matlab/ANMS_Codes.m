@@ -19,7 +19,7 @@ cols = size(I,2);
 cornersSorted = corners(ind);
 
 % get homegenously distributed keypoints
-selectedIdx = SSC(double(cornersSorted.Location), numRetPoints, tolerance, cols, rows);
+selectedIdx = ssc(double(cornersSorted.Location), numRetPoints, tolerance, cols, rows);
 selectedCorners = cornersSorted((selectedIdx+1)'); % +1 since matlab is one-indexed
 
 %% visualizing results
