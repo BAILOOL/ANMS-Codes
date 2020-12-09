@@ -10,7 +10,7 @@
 using namespace std;
 using namespace nanoflann;
 
-vector<cv::KeyPoint> TopN(vector<cv::KeyPoint> keyPoints, int numRetPoints)
+vector<cv::KeyPoint> topN(vector<cv::KeyPoint> keyPoints, int numRetPoints)
 {
     vector<cv::KeyPoint> kp;
     for (int i = 0; i < numRetPoints; i++) kp.push_back(keyPoints[i]); //simply extracting numRetPoints keyPoints
@@ -19,7 +19,7 @@ vector<cv::KeyPoint> TopN(vector<cv::KeyPoint> keyPoints, int numRetPoints)
 }
 
 #if CV_MAJOR_VERSION < 3   // If you are using OpenCV 2
-vector<cv::KeyPoint> GridFAST(cv::Mat Image, int numRetPoints, int gridRows, int gridCols){
+vector<cv::KeyPoint> gridFAST(cv::Mat Image, int numRetPoints, int gridRows, int gridCols){
     vector<cv::KeyPoint> kp;
     cv::Ptr<cv::FeatureDetector> featdetectorK = new cv::GridAdaptedFeatureDetector(cv::FeatureDetector::create("FAST"), numRetPoints, gridRows, gridCols);
     featdetectorK->detect(Image, kp);
@@ -35,7 +35,7 @@ struct sort_pred {
     }
 };
 
-vector<cv::KeyPoint> BrownANMS(vector<cv::KeyPoint> keyPoints, int numRetPoints) {
+vector<cv::KeyPoint> brownANMS(vector<cv::KeyPoint> keyPoints, int numRetPoints) {
     vector<pair<float,int> > results;
     results.push_back(make_pair(FLT_MAX,0));
     for (unsigned int i = 1;i<keyPoints.size();++i){ //for every keyPoint we get the min distance to the previously visited keyPoints
@@ -57,7 +57,7 @@ vector<cv::KeyPoint> BrownANMS(vector<cv::KeyPoint> keyPoints, int numRetPoints)
 
 
 
-vector<cv::KeyPoint> Sdc(vector<cv::KeyPoint> keyPoints, int numRetPoints, float tolerance, int cols, int rows){
+vector<cv::KeyPoint> sdc(vector<cv::KeyPoint> keyPoints, int numRetPoints, float tolerance, int cols, int rows){
     double eps_var = 0.25; //this parameter is chosen to be the most optimal in the original paper
 
     int low = 1; int high = cols; //binary search range initialization
@@ -159,7 +159,7 @@ void generatePointCloud(PointCloud<T> &point, vector<cv::KeyPoint> keyPoints)
 }
 
 
-vector<cv::KeyPoint> KdTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,float tolerance,int cols,int rows){
+vector<cv::KeyPoint> kdTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,float tolerance,int cols,int rows){
     // several temp expression variables to simplify solution equation
     int exp1 = rows + cols + 2*numRetPoints;
     long long exp2 = ((long long) 4*cols + (long long)4*numRetPoints + (long long)4*rows*numRetPoints + (long long)rows*rows + (long long) cols*cols - (long long)2*rows*cols + (long long)4*rows*cols*numRetPoints);
@@ -227,7 +227,7 @@ vector<cv::KeyPoint> KdTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,flo
     return kp;
 }
 
-vector<cv::KeyPoint> RangeTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,float tolerance, int cols, int rows)
+vector<cv::KeyPoint> rangeTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,float tolerance, int cols, int rows)
 {
     // several temp expression variables to simplify solution equation
     int exp1 = rows + cols + 2*numRetPoints;
@@ -290,7 +290,7 @@ vector<cv::KeyPoint> RangeTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,
     return kp;
 }
 
-vector<cv::KeyPoint> Ssc(vector<cv::KeyPoint> keyPoints, int numRetPoints,float tolerance, int cols, int rows){
+vector<cv::KeyPoint> ssc(vector<cv::KeyPoint> keyPoints, int numRetPoints,float tolerance, int cols, int rows){
     // several temp expression variables to simplify solution equation
     int exp1 = rows + cols + 2*numRetPoints;
     long long exp2 = ((long long) 4*cols + (long long)4*numRetPoints + (long long)4*rows*numRetPoints + (long long)rows*rows + (long long) cols*cols - (long long)2*rows*cols + (long long)4*rows*cols*numRetPoints);

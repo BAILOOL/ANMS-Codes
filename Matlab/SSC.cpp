@@ -5,7 +5,7 @@
 
 using namespace std;
 
-vector<int> SSC(double *pointLocation, int numInPoints, int numRetPoints, float tolerance, int cols, int rows){
+vector<int> ssc(double *pointLocation, int numInPoints, int numRetPoints, float tolerance, int cols, int rows){
     // several temp expression variables to simplify solution equation
     int exp1 = rows + cols + 2*numRetPoints;
     long long exp2 = ((long long) 4*cols + (long long)4*numRetPoints + (long long)4*rows*numRetPoints + (long long)rows*rows + (long long) cols*cols - (long long)2*rows*cols + (long long)4*rows*cols*numRetPoints);
@@ -24,7 +24,7 @@ vector<int> SSC(double *pointLocation, int numInPoints, int numRetPoints, float 
     vector<int> ResultVec;
     bool complete = false;
     unsigned int K = numRetPoints; unsigned int Kmin = round(K-(K*tolerance)); unsigned int Kmax = round(K+(K*tolerance));
-    
+
     vector<int> result; result.reserve(numInPoints);
     while(!complete){
         width = low+(high-low)/2;
@@ -95,9 +95,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     mexPrintf("cols = %d\n", cols);
     mexPrintf("rows = %d\n", rows);
     */
-    
+
     // running SSC algorithms
-    vector<int> selectedIdx = SSC(pointLocation, numInPoints, numRetPoints, tolerance, cols, rows);
+    vector<int> selectedIdx = ssc(pointLocation, numInPoints, numRetPoints, tolerance, cols, rows);
     int nSelectedPoints = (int) selectedIdx.size();
 
     // preparing outputs for matlab

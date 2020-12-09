@@ -42,45 +42,45 @@ int main(int argc, char *argv[])
 
     cout << "\nStart TopN" << endl;
     clock_t topNStart = clock();
-    vector<cv::KeyPoint> topnKP = TopN(keyPointsSorted,numRetPoints);
+    vector<cv::KeyPoint> topnKP = topN(keyPointsSorted,numRetPoints);
     clock_t topNTotalTime = double( clock() - topNStart)*1000/(double)CLOCKS_PER_SEC;
     cout << "Finish TopN in " << topNTotalTime << " miliseconds." << endl;
 
     #if CV_MAJOR_VERSION < 3 // Bucketing is no longer available in opencv3
         cout << "\nStart GridFAST" << endl;
         clock_t gridFASTStart = clock();
-        vector<cv::KeyPoint> gridFASTKP = GridFAST(testImg,numRetPoints,7,4); //change gridRows=7 and gridCols=4 parameters if           necessary
+        vector<cv::KeyPoint> gridFASTKP = gridFAST(testImg,numRetPoints,7,4); //change gridRows=7 and gridCols=4 parameters if           necessary
         clock_t gridFASTTotalTime = double( clock() - gridFASTStart)*1000/(double)CLOCKS_PER_SEC;
         cout << "Finish GridFAST in " << gridFASTTotalTime << " miliseconds." << endl;
     #endif
 
     cout << "\nBrown ANMS" << endl;
     clock_t brownStart = clock();
-    vector<cv::KeyPoint> brownKP = BrownANMS(keyPointsSorted,numRetPoints);
+    vector<cv::KeyPoint> brownKP = brownANMS(keyPointsSorted,numRetPoints);
     clock_t brownTotalTime = double( clock() - brownStart)*1000/(double)CLOCKS_PER_SEC;
     cout << "Brown ANMS " << brownTotalTime << " miliseconds." << endl;
 
     cout << "\nSDC ANMS" << endl;
     clock_t sdcStart = clock();
-    vector<cv::KeyPoint> sdcKP = Sdc(keyPointsSorted,numRetPoints,tolerance,testImg.cols,testImg.rows);
+    vector<cv::KeyPoint> sdcKP = sdc(keyPointsSorted,numRetPoints,tolerance,testImg.cols,testImg.rows);
     clock_t sdcTotalTime = double( clock() - sdcStart)*1000/(double)CLOCKS_PER_SEC;
     cout << "SDC ANMS " << sdcTotalTime << " miliseconds." << endl;
 
     cout << "\nStart K-d Tree ANMS" << endl;
     clock_t kdtreeStart = clock();
-    vector<cv::KeyPoint> kdtreeKP = KdTree(keyPointsSorted,numRetPoints,tolerance,testImg.cols,testImg.rows);
+    vector<cv::KeyPoint> kdtreeKP = kdTree(keyPointsSorted,numRetPoints,tolerance,testImg.cols,testImg.rows);
     clock_t kdtreeTotalTime = double( clock() - kdtreeStart)*1000/(double)CLOCKS_PER_SEC;
     cout << "Finish K-d Tree ANMS " << kdtreeTotalTime << " miliseconds." << endl;
 
     cout << "\nStart Range Tree ANMS" << endl;
     clock_t rangetreeStart = clock();
-    vector<cv::KeyPoint> rangetreeKP = RangeTree(keyPointsSorted,numRetPoints,tolerance,testImg.cols,testImg.rows);
+    vector<cv::KeyPoint> rangetreeKP = rangeTree(keyPointsSorted,numRetPoints,tolerance,testImg.cols,testImg.rows);
     clock_t rangetreeTotalTime = double( clock() - rangetreeStart)*1000/(double)CLOCKS_PER_SEC;
     cout << "Finish Range Tree ANMS " << rangetreeTotalTime << " miliseconds." << endl;
 
     cout << "\nStart SSC ANMS" << endl;
     clock_t sscStart = clock();
-    vector<cv::KeyPoint> sscKP = Ssc(keyPointsSorted,numRetPoints,tolerance,testImg.cols,testImg.rows);
+    vector<cv::KeyPoint> sscKP = ssc(keyPointsSorted,numRetPoints,tolerance,testImg.cols,testImg.rows);
     clock_t sscTotalTime = double( clock() - sscStart)*1000/(double)CLOCKS_PER_SEC;
     cout << "Finish SSC ANMS " << sscTotalTime << " miliseconds." << endl;
 
