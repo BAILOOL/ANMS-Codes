@@ -1,6 +1,6 @@
 # Efficient adaptive non-maximal suppression algorithms for homogeneous spatial keypoint distribution
 
-This is the implementation of the [paper](https://www.researchgate.net/publication/323388062_Efficient_adaptive_non-maximal_suppression_algorithms_for_homogeneous_spatial_keypoint_distribution) *"Efficient adaptive non-maximal suppression algorithms for homogeneous spatial keypoint distribution"* that is published in Pattern Recognition Letters (PRL).
+This is the implementation of the [paper](https://www.researchgate.net/publication/323388062_Efficient_adaptive_non-maximal_suppression_algorithms_for_homogeneous_spatial_keypoint_distribution) *"Efficient adaptive non-maximal suppression algorithms for homogeneous spatial keypoint distribution"* that is published in Pattern Recognition Letters (PRL). Alternatively, see [TL;DR version](https://www.shortscience.org/paper?bibtexKey=journals/prl/BailoRJPBK18&a=ukrdailo).
 
 ![Algorithm Overview](https://github.com/BAILOOL/ANMS-Codes/blob/master/Images/algorithm_overview.png?raw=true?raw=true "Algorithm Overview")
 
