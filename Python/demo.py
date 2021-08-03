@@ -24,8 +24,9 @@ def main():
     cv2.imshow("Detected FAST keypoints", img2)
     cv2.waitKey(0)
 
-    # keypoints should be sorted by strength in descending order before feeding to SSC to work correctly
-    shuffle(keypoints)  # simulating sorting by score with random shuffle
+    # keypoints should be sorted by strength in descending order
+    # before feeding to SSC to work correctly
+    keypoints = sorted(keypoints, key = lambda x:x.response, reverse=True)
 
     selected_keypoints = ssc(
         keypoints, args.num_ret_points, args.tolerance, img.shape[1], img.shape[0]
