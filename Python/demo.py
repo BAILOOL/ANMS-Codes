@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import argparse
-from random import shuffle
 
 import cv2  # pylint: disable=import-error
 from ssc import ssc
@@ -26,7 +25,7 @@ def main():
 
     # keypoints should be sorted by strength in descending order
     # before feeding to SSC to work correctly
-    keypoints = sorted(keypoints, key = lambda x:x.response, reverse=True)
+    keypoints = sorted(keypoints, key=lambda x: x.response, reverse=True)
 
     selected_keypoints = ssc(
         keypoints, args.num_ret_points, args.tolerance, img.shape[1], img.shape[0]
