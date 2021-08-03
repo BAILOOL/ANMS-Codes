@@ -18,9 +18,9 @@ def main():
     cv2.imshow("Input Image", img)
     cv2.waitKey(0)
 
-    fast = cv2.FastFeatureDetector()
+    fast = cv2.FastFeatureDetector_create()
     keypoints = fast.detect(img, None)
-    img2 = cv2.drawKeypoints(img, keypoints, color=(255, 0, 0))
+    img2 = cv2.drawKeypoints(img, keypoints, outImage=None, color=(255, 0, 0))
     cv2.imshow("Detected FAST keypoints", img2)
     cv2.waitKey(0)
 
@@ -31,7 +31,7 @@ def main():
         keypoints, args.num_ret_points, args.tolerance, img.shape[1], img.shape[0]
     )
 
-    img3 = cv2.drawKeypoints(img, selected_keypoints, color=(255, 0, 0))
+    img3 = cv2.drawKeypoints(img, selected_keypoints, outImage=None, color=(255, 0, 0))
     cv2.imshow("Selected keypoints", img3)
     cv2.waitKey(0)
 
