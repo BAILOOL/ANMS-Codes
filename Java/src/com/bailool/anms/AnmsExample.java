@@ -16,11 +16,14 @@ import org.opencv.imgcodecs.Imgcodecs;
 
 import org.opencv.highgui.HighGui;
 
+@SuppressWarnings({"PMD", "checkstyle:hideutilityclassconstructor"})
 public class AnmsExample {
 
-  /*
+  /**
    * Demo of Suppression via Square Covering (SSC) ANMS method.
+   * @param args Command line arguments. Not used in this demo.
    */
+  @SuppressWarnings("checkstyle:magicnumber")
   public static void main(final String[] args) {
     Logger logger = Logger.getLogger(AnmsExample.class.getName(), null);
 
@@ -73,11 +76,19 @@ public class AnmsExample {
     HighGui.waitKey();
   }
 
-  /*
+  /**
    * Suppression via Square Convering (SSC) algorithm.
    * Check Algorithm 2 in the paper:
    * https://www.sciencedirect.com/science/article/abs/pii/S016786551830062X
+   * @param keyPoints List of keypoints sorted in descending order of strength
+   * @param numRetPoints Number of points to returned
+   * @param tolerance Tolerance for number of retuned points in case
+   * exact solution cannot be nFound
+   * @param cols Image width
+   * @param rows Image height
+   * @return List of selected keypoints
    */
+  @SuppressWarnings("checkstyle:magicnumber")
   private static List<KeyPoint> ssc(final List<KeyPoint> keyPoints,
       final int numRetPoints, final float tolerance,
       final int cols, final int rows) {
