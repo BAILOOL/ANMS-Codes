@@ -24,4 +24,5 @@ jobs:
     - name: Super-Linter
       uses: docker://github/super-linter:latest
       env:
+        VALIDATE_CPP: false
         VALIDATE_JSCPD: false
