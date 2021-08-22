@@ -23,7 +23,7 @@ Related algorithms that are implemented in this repository are:
 For more details about the algorithm, experiments as well as the importance of homogeneously distributed keypoints for SLAM please refer to the [paper](https://www.researchgate.net/publication/323388062_Efficient_adaptive_non-maximal_suppression_algorithms_for_homogeneous_spatial_keypoint_distribution).
 
 ## How to run
-1. Clone this repository: ``` git clone https://github.com/BAILOOL/ANMS-Codes.git ```
+1. Clone this repository: `git clone https://github.com/BAILOOL/ANMS-Codes.git`. See [codebase visualization](https://octo-repo-visualization.vercel.app/?repo=BAILOOL%2FANMS-Codes) to better understand code repository structure.
 2. Choose your language:
     - [C++](https://github.com/BAILOOL/ANMS-Codes/tree/master/C++)
     - [Python](https://github.com/BAILOOL/ANMS-Codes/tree/master/Python)
