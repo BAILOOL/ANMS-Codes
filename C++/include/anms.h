@@ -206,7 +206,7 @@ vector<cv::KeyPoint> kdTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,
   double sol2 = -round((exp1 - exp3) / exp4); // second solution
 
   // binary search range initialization with positive solution
-  int high = (sol1 > sol2) ? sol1 : sol2; 
+  int high = (sol1 > sol2) ? sol1 : sol2;
   int low = floor(sqrt((double)keyPoints.size() / numRetPoints));
   low = max(1, low);
 
@@ -294,7 +294,7 @@ vector<cv::KeyPoint> rangeTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,
   double sol2 = -round((exp1 - exp3) / exp4); // second solution
 
   // binary search range initialization with positive solution
-  int high = (sol1 > sol2) ? sol1 : sol2; 
+  int high = (sol1 > sol2) ? sol1 : sol2;
   int low = floor(sqrt((double)keyPoints.size() / numRetPoints));
   low = max(1, low);
 
@@ -403,7 +403,7 @@ vector<cv::KeyPoint> ssc(vector<cv::KeyPoint> keyPoints, int numRetPoints,
       break;
     }
     result.clear();
-    double c = (double) width / 2.0; // initializing Grid
+    double c = (double)width / 2.0; // initializing Grid
     int numCellCols = floor(cols / c);
     int numCellRows = floor(rows / c);
     vector<vector<bool>> coveredVec(numCellRows + 1,

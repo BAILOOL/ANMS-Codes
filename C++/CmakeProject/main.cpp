@@ -14,13 +14,13 @@ int main(int argc, char *argv[]) {
   int fastThresh =
       1; // Fast threshold. Usually this value is set to be in range [10,35]
   vector<cv::KeyPoint> keyPoints; // vector to keep detected KeyPoints
-  
-  #if CV_MAJOR_VERSION < 3          // If you are using OpenCV 2
-    cv::FastFeatureDetector fastDetector(fastThresh, true);
-    fastDetector.detect(testImg, keyPoints);
-  #else
-    cv::FAST(testImg, keyPoints, fastThresh, true);
-  #endif
+
+#if CV_MAJOR_VERSION < 3 // If you are using OpenCV 2
+  cv::FastFeatureDetector fastDetector(fastThresh, true);
+  fastDetector.detect(testImg, keyPoints);
+#else
+  cv::FAST(testImg, keyPoints, fastThresh, true);
+#endif
   cout << "Number of points detected : " << keyPoints.size() << endl;
 
   cv::Mat fastDetectionResults; // draw FAST detections
@@ -36,11 +36,11 @@ int main(int argc, char *argv[]) {
   vector<int> Indx(responseVector.size());
   std::iota(std::begin(Indx), std::end(Indx), 0);
 
-  #if CV_MAJOR_VERSION >= 4
-    cv::sortIdx(responseVector, Indx, cv::SORT_DESCENDING);
-  #else
-    cv::sortIdx(responseVector, Indx, CV_SORT_DESCENDING);
-  #endif
+#if CV_MAJOR_VERSION >= 4
+  cv::sortIdx(responseVector, Indx, cv::SORT_DESCENDING);
+#else
+  cv::sortIdx(responseVector, Indx, CV_SORT_DESCENDING);
+#endif
 
   vector<cv::KeyPoint> keyPointsSorted;
   for (unsigned int i = 0; i < keyPoints.size(); i++)
@@ -59,16 +59,16 @@ int main(int argc, char *argv[]) {
       double(clock() - topNStart) * 1000 / (double)CLOCKS_PER_SEC;
   cout << "Finish TopN in " << topNTotalTime << " miliseconds." << endl;
 
-  #if CV_MAJOR_VERSION < 3 // Bucketing is no longer available in opencv3
-    cout << "\nStart GridFAST" << endl;
-    clock_t gridFASTStart = clock();
-    vector<cv::KeyPoint> gridFASTKP =
-        gridFAST(testImg, numRetPoints, 7,
-                4); // change gridRows=7 and gridCols=4 parameters if necessary
-    clock_t gridFASTTotalTime =
-        double(clock() - gridFASTStart) * 1000 / (double)CLOCKS_PER_SEC;
-    cout << "Finish GridFAST in " << gridFASTTotalTime << " miliseconds." << endl;
-  #endif
+#if CV_MAJOR_VERSION < 3 // Bucketing is no longer available in opencv3
+  cout << "\nStart GridFAST" << endl;
+  clock_t gridFASTStart = clock();
+  vector<cv::KeyPoint> gridFASTKP =
+      gridFAST(testImg, numRetPoints, 7,
+               4); // change gridRows=7 and gridCols=4 parameters if necessary
+  clock_t gridFASTTotalTime =
+      double(clock() - gridFASTStart) * 1000 / (double)CLOCKS_PER_SEC;
+  cout << "Finish GridFAST in " << gridFASTTotalTime << " miliseconds." << endl;
+#endif
 
   cout << "\nBrown ANMS" << endl;
   clock_t brownStart = clock();
@@ -112,9 +112,9 @@ int main(int argc, char *argv[]) {
 
   // results visualization
   VisualizeAll(testImg, topnKP, "TopN KeyPoints");
-  #if CV_MAJOR_VERSION < 3
-    VisualizeAll(testImg, gridFASTKP, "Grid FAST KeyPoints");
-  #endif
+#if CV_MAJOR_VERSION < 3
+  VisualizeAll(testImg, gridFASTKP, "Grid FAST KeyPoints");
+#endif
 
   VisualizeAll(testImg, brownKP, "Brown ANMS KeyPoints");
   VisualizeAll(testImg, sdcKP, "SDC KeyPoints");

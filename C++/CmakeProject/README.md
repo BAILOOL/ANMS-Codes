@@ -12,8 +12,8 @@ Either install OpenCV locally or use docker.
            --env="DISPLAY" \
            --env="QT_X11_NO_MITSHM=1" \
            --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-	    --volume="$HOME/.Xauthority:/home/$USER/.Xauthority:rw" \
-	    --volume="${PWD}:/home/$USER/ANMS-Codes" \
+           --volume="$HOME/.Xauthority:/home/$USER/.Xauthority:rw" \
+           --volume="${PWD}:/home/$USER/ANMS-Codes" \
            frameau/opencv-ceres
     ```
 
