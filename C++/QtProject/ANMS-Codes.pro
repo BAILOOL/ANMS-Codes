@@ -16,7 +16,7 @@ LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_features2d -lop
 SOURCES += main.cpp
 
 HEADERS += \
-    nanoflann.hpp \
-    range-tree/lrtypes.h \
-    range-tree/ranget.h \
-    anms.h
+    ../include/nanoflann.hpp \
+    ../include/range-tree/lrtypes.h \
+    ../include/range-tree/ranget.h \
+    ../include/anms.h
