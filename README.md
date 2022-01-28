@@ -30,11 +30,11 @@ For more details about the algorithm, experiments as well as the importance of h
     - [Matlab](https://github.com/BAILOOL/ANMS-Codes/tree/master/Matlab) [![View ANMS-Codes on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://uk.mathworks.com/matlabcentral/fileexchange/88723-anms-codes)
     - [Java](https://github.com/BAILOOL/ANMS-Codes/tree/master/Java)
 
-3. Make sure the [path to test image](https://github.com/BAILOOL/ANMS-Codes/blob/d907ca805fcf1ea670ac75a9ea9b46446421e573/C++/CmakeProject/source/main.cpp#L8) is set correctly
+3. Make sure the [path to test image](C++/CmakeProject/main.cpp#L8) is set correctly
 
 4. Run produced executable `./ANMS_Codes` for C++ or relevant script for other languages
 
-Codes are tested with OpenCV 2.4.8, OpenCV 3.3.1 and Ubuntu 14.04, 16.04.
+Codes have been tested with `OpenCV 2.4.8`, `OpenCV 3.3.1`, `OpenCV 4.2.0` and `Ubuntu 14.04`, `16.04`, `20.04`.
 
 ## Contributing
 Follow instructions in [docs/contributing](https://github.com/BAILOOL/ANMS-Codes/blob/master/docs/contributing.rst).
