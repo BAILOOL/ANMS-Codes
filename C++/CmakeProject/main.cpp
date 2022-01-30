@@ -14,7 +14,8 @@ int main(int argc, char *argv[]) {
   int fastThresh =
       1; // Fast threshold. Usually this value is set to be in range [10,35]
   vector<cv::KeyPoint> keyPoints; // vector to keep detected KeyPoints
-#if CV_MAJOR_VERSION < 3          // If you are using OpenCV 2
+
+#if CV_MAJOR_VERSION < 3 // If you are using OpenCV 2
   cv::FastFeatureDetector fastDetector(fastThresh, true);
   fastDetector.detect(testImg, keyPoints);
 #else
@@ -34,7 +35,13 @@ int main(int argc, char *argv[]) {
     responseVector.push_back(keyPoints[i].response);
   vector<int> Indx(responseVector.size());
   std::iota(std::begin(Indx), std::end(Indx), 0);
+
+#if CV_MAJOR_VERSION >= 4
+  cv::sortIdx(responseVector, Indx, cv::SORT_DESCENDING);
+#else
   cv::sortIdx(responseVector, Indx, CV_SORT_DESCENDING);
+#endif
+
   vector<cv::KeyPoint> keyPointsSorted;
   for (unsigned int i = 0; i < keyPoints.size(); i++)
     keyPointsSorted.push_back(keyPoints[Indx[i]]);
@@ -108,6 +115,7 @@ int main(int argc, char *argv[]) {
 #if CV_MAJOR_VERSION < 3
   VisualizeAll(testImg, gridFASTKP, "Grid FAST KeyPoints");
 #endif
+
   VisualizeAll(testImg, brownKP, "Brown ANMS KeyPoints");
   VisualizeAll(testImg, sdcKP, "SDC KeyPoints");
   VisualizeAll(testImg, kdtreeKP, "K-d Tree KeyPoints");

@@ -5,6 +5,9 @@
 #include <iostream>
 #include <nanoflann.hpp>
 #include <opencv2/opencv.hpp>
+#if CV_MAJOR_VERSION >= 4
+#include "opencv2/imgcodecs/legacy/constants_c.h"
+#endif
 #include <stdlib.h>
 
 using namespace std;
@@ -202,11 +205,10 @@ vector<cv::KeyPoint> kdTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,
   double sol1 = -round((exp1 + exp3) / exp4); // first solution
   double sol2 = -round((exp1 - exp3) / exp4); // second solution
 
-  int high =
-      (sol1 > sol2)
-          ? sol1
-          : sol2; // binary search range initialization with positive solution
+  // binary search range initialization with positive solution
+  int high = (sol1 > sol2) ? sol1 : sol2;
   int low = floor(sqrt((double)keyPoints.size() / numRetPoints));
+  low = max(1, low);
 
   PointCloud<int> cloud; // creating k-d tree with keypoints
   generatePointCloud(cloud, keyPoints);
@@ -291,11 +293,10 @@ vector<cv::KeyPoint> rangeTree(vector<cv::KeyPoint> keyPoints, int numRetPoints,
   double sol1 = -round((exp1 + exp3) / exp4); // first solution
   double sol2 = -round((exp1 - exp3) / exp4); // second solution
 
-  int high =
-      (sol1 > sol2)
-          ? sol1
-          : sol2; // binary search range initialization with positive solution
+  // binary search range initialization with positive solution
+  int high = (sol1 > sol2) ? sol1 : sol2;
   int low = floor(sqrt((double)keyPoints.size() / numRetPoints));
+  low = max(1, low);
 
   rangetree<u16, u16> treeANMS(
       keyPoints.size(), keyPoints.size()); // creating range tree with keypoints
@@ -377,11 +378,10 @@ vector<cv::KeyPoint> ssc(vector<cv::KeyPoint> keyPoints, int numRetPoints,
   double sol1 = -round((exp1 + exp3) / exp4); // first solution
   double sol2 = -round((exp1 - exp3) / exp4); // second solution
 
-  int high =
-      (sol1 > sol2)
-          ? sol1
-          : sol2; // binary search range initialization with positive solution
+  // binary search range initialization with positive solution
+  int high = (sol1 > sol2) ? sol1 : sol2;
   int low = floor(sqrt((double)keyPoints.size() / numRetPoints));
+  low = max(1, low);
 
   int width;
   int prevWidth = -1;
@@ -403,7 +403,7 @@ vector<cv::KeyPoint> ssc(vector<cv::KeyPoint> keyPoints, int numRetPoints,
       break;
     }
     result.clear();
-    double c = width / 2; // initializing Grid
+    double c = (double)width / 2.0; // initializing Grid
     int numCellCols = floor(cols / c);
     int numCellRows = floor(rows / c);
     vector<vector<bool>> coveredVec(numCellRows + 1,

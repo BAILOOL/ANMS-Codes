@@ -13,15 +13,13 @@ endif( OpenCV_FOUND )
 
 include_directories(
     /usr/include/opencv
-    "${CMAKE_SOURCE_DIR}/source"
-    "${CMAKE_SOURCE_DIR}"
+	${CMAKE_CURRENT_LIST_DIR}/../include
 )
 
-add_executable( ANMS_Codes 
-		source/nanoflann.hpp
-		source/range-tree/lrtypes.h
-		source/range-tree/ranget.h
-		source/anms.h
-		source/main.cpp )
+add_executable( ANMS_Codes main.cpp 
+	${CMAKE_CURRENT_LIST_DIR}/../include/nanoflann.hpp
+	${CMAKE_CURRENT_LIST_DIR}/../include/range-tree/lrtypes.h
+	${CMAKE_CURRENT_LIST_DIR}/../include/range-tree/ranget.h
+	${CMAKE_CURRENT_LIST_DIR}/../include/anms.h)
 
 target_link_libraries( ANMS_Codes ${OpenCV_LIBS} )
